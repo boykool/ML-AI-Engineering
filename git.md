@@ -5,6 +5,8 @@
 
 зроби pull
 
+===
+
 зроби commit (без push)
 
 зроби push
