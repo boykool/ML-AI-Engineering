@@ -5,6 +5,11 @@
 
 зроби pull
 
+
+===
+
+добавь файл git.md и gpt.md в .gitignore
+
 ===
 
 зроби commit (без push)
