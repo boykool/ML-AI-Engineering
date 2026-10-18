@@ -1,3 +1,4 @@
+-- Active: 1792342679007@@127.0.0.1@55432@northwind@public
 /*
 
 Основи баз даних та SQL
@@ -40,3 +41,5 @@ SELECT first_name,
        title
 FROM employees;
 
+SELECT *
+FROM products;
