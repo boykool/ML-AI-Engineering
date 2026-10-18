@@ -1,6 +1,5 @@
 /*
 
-
 Основи баз даних та SQL
 https://hannapylieva.notion.site/ebd//1cd94835849480f3a6d4fa007773cc87
 
@@ -35,4 +34,9 @@ https://hannapylieva.notion.site/ebd//1cf94835849480f0987bc70ee0a46069
 
 SELECT product_name
 FROM products;
+
+SELECT first_name,
+       last_name,
+       title
+FROM employees;
 
