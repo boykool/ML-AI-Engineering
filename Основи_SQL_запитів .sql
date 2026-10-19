@@ -43,3 +43,124 @@ FROM employees;
 
 SELECT *
 FROM products;
+
+SELECT *
+FROM products
+WHERE discontinued = 1;
+
+SELECT product_id
+     , product_name
+     , supplier_id
+     , discontinued
+FROM products
+WHERE discontinued = 1
+;
+
+
+SELECT product_id
+     , product_name
+--      , supplier_id
+     , discontinued
+FROM products
+WHERE discontinued = 0
+;
+
+SELECT *
+FROM employees
+WHERE title = 'Sales Representative'
+;
+
+SELECT product_name
+     , unit_price
+FROM products
+WHERE unit_price > 100
+;
+
+SELECT product_name
+     , unit_price
+     , units_in_stock
+FROM products
+WHERE unit_price > 10
+  AND unit_price < 200
+  AND units_in_stock > 0
+;
+
+
+SELECT *
+FROM employees
+WHERE country != 'USA';
+
+
+SELECT employee_id
+     , country
+FROM employees
+WHERE country != 'USA';
+
+
+SELECT *
+FROM customers
+WHERE city = 'London'
+   OR city = 'Paris'
+;
+
+SELECT *
+FROM customers
+WHERE NOT (city = 'London' OR city = 'Paris')
+;
+
+SELECT city
+FROM customers
+WHERE NOT (city = 'London' OR city = 'Paris')
+;
+
+SELECT city
+FROM customers
+WHERE NOT city = 'London' OR city = 'Paris'
+;
+
+SELECT COUNT(*) FROM customers
+WHERE NOT (city = 'London' OR city = 'Paris')
+;
+
+SELECT COUNT(*) FROM customers
+WHERE NOT city = 'London' OR city = 'Paris'
+;
+
+SELECT * FROM customers
+WHERE NOT city = 'London' OR city = 'Paris'
+ORDER BY city
+;
+
+
+SELECT * FROM customers
+WHERE NOT (city = 'London' OR city = 'Paris')
+ORDER BY city
+;
+
+SELECT COUNT(*) FROM customers
+WHERE NOT (city IN ('London', 'Paris'))
+-- ORDER BY city
+;
+
+SELECT * FROM customers
+WHERE city IN ('London' , 'Paris', 'Portland')
+ORDER BY city
+;
+
+SELECT * FROM customers
+WHERE city IN ('london' , 'Paris', 'Portland')
+ORDER BY city
+;
+
+SELECT * FROM customers
+WHERE city = 'London'
+ORDER BY city
+;
+
+
+
+
+
+
+
+
