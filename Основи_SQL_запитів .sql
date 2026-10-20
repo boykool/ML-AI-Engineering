@@ -220,9 +220,37 @@ FROM customers
 WHERE contact_name LIKE '__a%'
 ;
 
+SELECT *
+FROM customers
+WHERE region IS NULL
+;
+
+SELECT *
+FROM customers
+WHERE region IS NOT NULL
+;
 
 
+SELECT *
+FROM customers
+WHERE region IS NOT NULL
+  AND fax IS NOT NULL
+;
 
 
+SELECT product_name, unit_price, units_in_stock
+FROM products
+WHERE unit_price > 50
+  AND units_in_stock > 0
+  AND discontinued = 0
+;
 
+/*
+
+Домашнє завдання: SQL-практика - SELECT, WHERE
+
+https://hannapylieva.notion.site/SQL-SELECT-WHERE-1d09483584948088871bcc039a7a63c5
+
+
+ */
 
