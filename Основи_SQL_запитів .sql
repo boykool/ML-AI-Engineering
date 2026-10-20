@@ -9,7 +9,7 @@ https://hannapylieva.notion.site/ebd//1cd94835849480f3a6d4fa007773cc87
 Розділ 1. Вступ до баз даних
 https://hannapylieva.notion.site/ebd//1cf94835849480e8a5ade7bb86377efd
 
-Learn SQL - Online SQL Terminal - Practice SQL Querys
+Learn SQL - Online SQL Terminal - Practice SQL Queries
 https://www.sql-practice.com/
 
 ===
