@@ -115,48 +115,110 @@ WHERE NOT (city = 'London' OR city = 'Paris')
 
 SELECT city
 FROM customers
-WHERE NOT city = 'London' OR city = 'Paris'
+WHERE NOT city = 'London'
+   OR city = 'Paris'
 ;
 
-SELECT COUNT(*) FROM customers
+SELECT COUNT(*)
+FROM customers
 WHERE NOT (city = 'London' OR city = 'Paris')
 ;
 
-SELECT COUNT(*) FROM customers
-WHERE NOT city = 'London' OR city = 'Paris'
+SELECT COUNT(*)
+FROM customers
+WHERE NOT city = 'London'
+   OR city = 'Paris'
 ;
 
-SELECT * FROM customers
-WHERE NOT city = 'London' OR city = 'Paris'
+SELECT *
+FROM customers
+WHERE NOT city = 'London'
+   OR city = 'Paris'
 ORDER BY city
 ;
 
 
-SELECT * FROM customers
+SELECT *
+FROM customers
 WHERE NOT (city = 'London' OR city = 'Paris')
 ORDER BY city
 ;
 
-SELECT COUNT(*) FROM customers
+SELECT COUNT(*)
+FROM customers
 WHERE NOT (city IN ('London', 'Paris'))
 -- ORDER BY city
 ;
 
-SELECT * FROM customers
-WHERE city IN ('London' , 'Paris', 'Portland')
+SELECT *
+FROM customers
+WHERE city IN ('London', 'Paris', 'Portland')
 ORDER BY city
 ;
 
-SELECT * FROM customers
-WHERE city IN ('london' , 'Paris', 'Portland')
+SELECT *
+FROM customers
+WHERE city IN ('london', 'Paris', 'Portland')
 ORDER BY city
 ;
 
-SELECT * FROM customers
+SELECT *
+FROM customers
 WHERE city = 'London'
 ORDER BY city
 ;
 
+
+SELECT product_name, unit_price
+FROM products
+WHERE unit_price BETWEEN 20 AND 30
+;
+
+
+SELECT product_name, unit_price
+FROM products
+WHERE unit_price >= 20
+  AND unit_price <= 30;
+
+
+SELECT *
+FROM customers
+WHERE contact_name LIKE 'A%'
+;
+
+SELECT *
+FROM customers
+WHERE contact_name LIKE '%n'
+;
+
+SELECT *
+FROM customers
+WHERE contact_name LIKE '_a%'
+;
+
+SELECT *
+FROM customers
+WHERE LOWER(city) = 'london'
+;
+
+SELECT *
+FROM employees
+WHERE LOWER(city) = 'london'
+;
+
+SELECT LOWER(city)
+FROM employees
+;
+
+SELECT customer_id, company_name, contact_name
+FROM customers
+WHERE contact_name LIKE '__a%'
+;
+
+SELECT customer_id, LOWER(company_name), contact_name
+FROM customers
+WHERE contact_name LIKE '__a%'
+;
 
 
 
