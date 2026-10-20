@@ -254,3 +254,73 @@ https://hannapylieva.notion.site/SQL-SELECT-WHERE-1d09483584948088871bcc039a7a63
 
  */
 
+
+SELECT product_name, unit_price
+FROM products
+ORDER BY unit_price DESC
+;
+
+
+SELECT first_name, last_name
+FROM employees
+ORDER BY last_name --ASC
+;
+
+SELECT product_name, unit_price
+FROM products
+ORDER BY unit_price DESC
+LIMIT 5
+;
+
+SELECT *
+FROM categories
+;
+
+INSERT INTO categories (category_id, category_name, description)
+VALUES (9, 'Drinks', 'Non-alcoholic beverages')
+;
+
+SELECT *
+FROM categories
+;
+
+
+UPDATE products
+SET unit_price = 25
+WHERE product_id = 1;
+
+SELECT *
+FROM products
+WHERE product_id = 1
+;
+
+UPDATE products
+SET unit_price = 25
+WHERE product_id IN (1,2,4)
+;
+
+SELECT * FROM products
+WHERE product_id IN (1,2,4)
+;
+
+UPDATE products
+SET unit_price = unit_price * 1.1
+WHERE category_id = 4
+;
+
+
+SELECT * FROM products
+WHERE category_id = 4
+;
+
+/*
+
+DELETE FROM products
+WHERE units_in_stock = 0;
+
+SELECT * FROM products;
+
+*/
+
+
+
