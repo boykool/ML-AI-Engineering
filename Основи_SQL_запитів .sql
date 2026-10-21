@@ -359,14 +359,23 @@ FROM products
 ;
 
 
+SELECT category_id
+     , AVG(unit_price) AS avg_price
+FROM products
+GROUP BY category_id
+;
+
+SELECT AVG(unit_price)
+FROM products;
 
 
-
-
-
-
-
-
+SELECT category_id
+     , AVG(unit_price) AS avg_price
+     , MIN(unit_price) AS min_price
+     , MAX(unit_price) AS max_price
+FROM products
+GROUP BY category_id
+;
 
 
 
