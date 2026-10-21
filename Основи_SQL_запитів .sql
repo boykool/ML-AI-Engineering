@@ -329,10 +329,45 @@ SELECT * FROM products;
 https://hannapylieva.notion.site/SQL-ORDER-BY-LIMIT-INSERT-UPDATE-DELETE-1d094835849480c5a5fcee6b2183d261
 */
 
-
 SELECT COUNT(*) AS total_products
 FROM products
 ;
+
+SELECT COUNT(*) AS total_emp
+FROM employees
+;
+
+SELECT AVG(unit_price) AS avg_unit_price
+FROM products
+;
+
+SELECT AVG(units_in_stock) AS avg_unit_price
+FROM products
+;
+
+SELECT AVG(unit_price),
+       AVG(units_in_stock),
+       AVG(units_on_order)
+           AS avg_unit_price
+FROM products
+;
+
+SELECT AVG(unit_price)     AS avg_price,
+       AVG(units_in_stock) AS avg_uis,
+       AVG(units_on_order) AS avg_unit_price
+FROM products
+;
+
+
+
+
+
+
+
+
+
+
+
 
 
 
