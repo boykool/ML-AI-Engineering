@@ -296,11 +296,12 @@ WHERE product_id = 1
 
 UPDATE products
 SET unit_price = 25
-WHERE product_id IN (1,2,4)
+WHERE product_id IN (1, 2, 4)
 ;
 
-SELECT * FROM products
-WHERE product_id IN (1,2,4)
+SELECT *
+FROM products
+WHERE product_id IN (1, 2, 4)
 ;
 
 UPDATE products
@@ -309,7 +310,8 @@ WHERE category_id = 4
 ;
 
 
-SELECT * FROM products
+SELECT *
+FROM products
 WHERE category_id = 4
 ;
 
@@ -326,3 +328,12 @@ SELECT * FROM products;
 Домашнє завдання: SQL-практика: ORDER BY, LIMIT, INSERT, UPDATE, DELETE
 https://hannapylieva.notion.site/SQL-ORDER-BY-LIMIT-INSERT-UPDATE-DELETE-1d094835849480c5a5fcee6b2183d261
 */
+
+
+SELECT COUNT(*) AS total_products
+FROM products
+;
+
+
+
+
