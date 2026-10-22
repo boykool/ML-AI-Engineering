@@ -378,6 +378,15 @@ GROUP BY category_id
 ;
 
 
-
+SELECT category_id,
+       COUNT(1)                                                AS n_products,
+       AVG(unit_price)                                         AS avg_price,
+       MODE() WITHIN GROUP (ORDER BY unit_price)               AS mode_price,
+       PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY unit_price) AS median_price,
+       MIN(unit_price)                                         AS min_price,
+       MAX(unit_price)                                         AS max_price
+FROM products
+GROUP BY category_id
+;
 
 
