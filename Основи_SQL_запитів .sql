@@ -378,15 +378,28 @@ GROUP BY category_id
 ;
 
 
-SELECT category_id,
-       COUNT(1)                                                AS n_products,
-       AVG(unit_price)                                         AS avg_price,
-       MODE() WITHIN GROUP (ORDER BY unit_price)               AS mode_price,
-       PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY unit_price) AS median_price,
-       MIN(unit_price)                                         AS min_price,
-       MAX(unit_price)                                         AS max_price
-FROM products
-GROUP BY category_id
+SELECT
+    c.category_id,
+    c.category_name,
+    COUNT(*)                                              AS n_products,
+    AVG(p.unit_price)                                     AS avg_price,
+    mode() WITHIN GROUP (ORDER BY p.unit_price)           AS mode_price,
+    percentile_cont(0.5) WITHIN GROUP (ORDER BY p.unit_price) AS median_price,
+    MIN(p.unit_price)                                     AS min_price,
+    MAX(p.unit_price)                                     AS max_price
+FROM products p
+JOIN categories c ON p.category_id = c.category_id
+GROUP BY c.category_id, c.category_name
+ORDER BY avg_price
 ;
 
-
+SELECT
+    supplier_id,
+    category_id,
+    --category_name,
+    COUNT(1) AS n_products,
+    AVG(unit_price) AS avg_price
+FROM products
+GROUP BY supplier_id, category_id
+ORDER BY avg_price
+;
