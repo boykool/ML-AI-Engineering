@@ -443,3 +443,123 @@ WHERE category_id IN (1, 2)
 GROUP BY category_id, supplier_id
 HAVING AVG(unit_price) > 10
 ;
+
+
+SELECT category_id, AVG(unit_price) AS avg_price
+FROM products
+WHERE units_in_stock > 0
+GROUP BY category_id
+--HAVING AVG(unit_price) > 50
+;
+
+SELECT category_id, AVG(unit_price) AS avg_price
+FROM products
+WHERE units_in_stock > 0
+GROUP BY category_id
+--HAVING AVG(unit_price) > 50
+;
+
+SELECT category_id, COUNT(1) AS n_items
+FROM products
+WHERE units_in_stock = 0
+GROUP BY category_id
+ORDER BY category_id
+;
+
+SELECT category_id, AVG(unit_price) AS avg_price
+FROM products
+WHERE units_in_stock > 0
+GROUP BY category_id
+HAVING AVG(unit_price) > 30
+ORDER BY category_id
+;
+
+SELECT customer_id, COUNT(*) AS total_orders
+FROM orders
+GROUP BY customer_id
+HAVING COUNT(*) > 10
+;
+
+
+SELECT customer_id,
+       COUNT(*) AS total_orders
+FROM orders
+GROUP BY customer_id
+ORDER BY total_orders
+;
+
+SELECT customer_id,
+       COUNT(*) AS total_orders
+FROM orders
+GROUP BY customer_id
+ORDER BY total_orders DESC
+LIMIT 5
+;
+
+
+-- boo
+SELECT AVG(unit_price)
+FROM products
+;
+
+
+SELECT product_name, unit_price
+FROM products
+WHERE unit_price > (SELECT AVG(unit_price)
+                    FROM products)
+;
+
+-- boo
+SELECT category_id, AVG(unit_price) AS avg_price
+FROM products
+GROUP BY category_id
+;
+
+SELECT category_id, avg_price
+FROM (SELECT category_id, AVG(unit_price) AS avg_price
+      FROM products
+      GROUP BY category_id) AS sub
+ORDER BY avg_price DESC;
+
+
+
+SELECT category_id, avg_price
+FROM (SELECT category_id, AVG(unit_price) AS avg_price
+      FROM products
+      GROUP BY category_id) AS sub
+WHERE avg_price > 25
+ORDER BY avg_price DESC;
+
+
+SELECT category_id, AVG(unit_price) AS avg_price
+FROM products
+GROUP BY category_id
+HAVING AVG(unit_price) > 25
+ORDER BY avg_price DESC
+;
+
+WITH sub AS (SELECT category_id, AVG(unit_price) AS avg_price
+             FROM products
+             GROUP BY category_id)
+SELECT category_id, avg_price
+FROM sub
+WHERE avg_price > 25
+ORDER BY avg_price DESC
+;
+
+SELECT order_id
+     , EXTRACT(YEAR FROM order_date)  AS order_year
+     , EXTRACT(MONTH FROM order_date) AS order_month
+     , EXTRACT(DAY FROM order_date)   AS order_day
+--   , YEAR(order_date)               AS order_year
+--   , MONTH(order_date)              AS order_month
+--   , DAY(order_date)                AS order_day
+FROM orders
+;
+
+
+
+
+
+
+
