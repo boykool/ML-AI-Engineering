@@ -412,18 +412,34 @@ GROUP BY supplier_id, category_id
 ;
 
 
-SELECT
-    supplier_id,
-    category_id,
+SELECT supplier_id,
+       category_id,
 --    category_name,
-    COUNT(1) AS n_products,
-    AVG(unit_price) AS avg_price
+       COUNT(1)        AS n_products,
+       AVG(unit_price) AS avg_price
 FROM products
 WHERE category_id IN (1, 2)
 GROUP BY supplier_id, category_id
 ORDER BY supplier_id, category_id
 ;
 
-SELECT * FROM products
-LIMIT 12
+SELECT category_id,
+       supplier_id,
+       COUNT(1)        AS n_products,
+       AVG(unit_price) AS avg_price
+FROM products
+WHERE category_id IN (1, 2)
+GROUP BY category_id, supplier_id
+ORDER BY avg_price
+;
+
+
+SELECT category_id,
+       supplier_id,
+       COUNT(1)        AS n_products,
+       AVG(unit_price) AS avg_price
+FROM products
+WHERE category_id IN (1, 2)
+GROUP BY category_id, supplier_id
+HAVING AVG(unit_price) > 10
 ;
