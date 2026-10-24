@@ -586,6 +586,58 @@ FROM order_details od
          JOIN products p
               ON p.product_id = od.product_id
 GROUP BY p.product_id
-ORDER BY n_orders --DESC
+--GROUP BY 1 , 2
+ORDER BY n_orders
+--DESC
 --LIMIT 5
 ;
+
+
+SELECT COUNT(1)
+FROM products p
+         FULL JOIN categories c
+                   ON p.category_id = c.category_id
+;
+
+--
+
+SELECT product_name
+     , category_name
+FROM products p
+         JOIN categories c
+              ON p.category_id = c.category_id;
+
+SELECT COUNT(*)
+FROM products
+;
+
+SELECT COUNT(1)
+--     , product_name
+--     , category_name
+FROM products p
+         JOIN categories c
+              ON p.category_id = c.category_id;
+
+SELECT COUNT(1)
+--product_name, category_name
+FROM products p
+         CROSS JOIN categories c
+--ON p.category_id = c.category_id;
+;
+
+SELECT COUNT(1)
+-- product_name, category_name, p.category_id , c.category_id
+FROM products p
+         FULL JOIN categories c
+                   ON p.category_id = c.category_id
+;
+
+---
+
+SELECT e.employee_id,
+       m.employee_id
+FROM employees e
+         LEFT JOIN employees m
+                   ON e.reports_to = m.employee_id
+;
+
