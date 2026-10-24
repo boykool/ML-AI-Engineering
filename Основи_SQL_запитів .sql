@@ -555,6 +555,8 @@ SELECT order_id
 --   , MONTH(order_date)              AS order_month
 --   , DAY(order_date)                AS order_day
 FROM orders
+--WHERE order_month IN (6,7,8);
+WHERE EXTRACT(MONTH FROM order_date) IN (6,7,8)
 ;
 
 
