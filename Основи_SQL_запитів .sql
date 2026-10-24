@@ -556,12 +556,36 @@ SELECT order_id
 --   , DAY(order_date)                AS order_day
 FROM orders
 --WHERE order_month IN (6,7,8);
-WHERE EXTRACT(MONTH FROM order_date) IN (6,7,8)
+WHERE EXTRACT(MONTH FROM order_date) IN (6, 7, 8)
 ;
 
 
+SELECT product_name
+     , category_name
+FROM products p
+         LEFT JOIN categories c
+                   ON p.category_id = c.category_id
+;
 
 
+SELECT *
+FROM products p
+         LEFT JOIN categories c
+                   ON p.category_id = c.category_id
+WHERE category_name IS NULL;
 
+SELECT COUNT(*)
+FROM products p
+         RIGHT JOIN order_details od
+                    ON p.product_id = od.product_id;
 
-
+SELECT p.product_id,
+       p.product_name,
+       COUNT(*) AS n_orders
+FROM order_details od
+         JOIN products p
+              ON p.product_id = od.product_id
+GROUP BY p.product_id
+ORDER BY n_orders --DESC
+--LIMIT 5
+;
