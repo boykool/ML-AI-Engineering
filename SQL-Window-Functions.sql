@@ -1,6 +1,4 @@
 -- Active: 1792938177308@@127.0.0.1@3306
-
-
 /*
 
 SQL: Window Functions
@@ -13,6 +11,9 @@ SELECT AVG(weight) AS avg_weight
 FROM patients
 ;
 
-SELECT *
+SELECT first_name,
+       last_name,
+       weight,
+       AVG(weight) OVER () AS avg_weight
 FROM patients
 ;
