@@ -17,3 +17,18 @@ SELECT first_name,
        AVG(weight) OVER () AS avg_weight
 FROM patients
 ;
+
+WITH rolling_sum_table AS (SELECT patient_id,
+                                  first_name,
+                                  weight,
+                                  SUM(weight) OVER (ORDER BY patient_id) AS rolling_sum
+                           FROM patients)
+SELECT *
+FROM rolling_sum_table
+WHERE rolling_sum < 1000
+;
+
+
+
+
+
