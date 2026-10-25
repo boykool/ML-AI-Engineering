@@ -29,6 +29,13 @@ WHERE rolling_sum < 1000
 ;
 
 
-
+SELECT *
+FROM (SELECT patient_id,
+             first_name,
+             weight,
+             SUM(weight) OVER (ORDER BY patient_id) AS rolling_sum
+      FROM patients)
+WHERE rolling_sum < 1000
+;
 
 
