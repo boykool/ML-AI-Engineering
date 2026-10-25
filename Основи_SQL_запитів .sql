@@ -641,3 +641,168 @@ FROM employees e
                    ON e.reports_to = m.employee_id
 ;
 
+SELECT e.employee_id,
+       m.employee_id
+FROM employees e
+         LEFT JOIN employees m
+                   ON e.reports_to = m.employee_id
+;
+
+SELECT employee_id
+     , reports_to
+FROM employees
+;
+
+SELECT COUNT(*)
+FROM employees
+;
+
+-- gpt
+SELECT e.employee_id
+     , e.first_name
+     , e.last_name
+     , e.title
+     , m.employee_id AS manager_id
+     , m.title       AS manager_title
+FROM employees e
+         LEFT JOIN employees m
+                   ON e.reports_to = m.employee_id
+WHERE e.reports_to = 5
+;
+
+
+SELECT e.employee_id
+     , e.first_name
+     , e.last_name
+     , e.title
+     , m.employee_id
+     , m.title
+FROM employees e
+         LEFT JOIN employees m
+                   ON e.reports_to = m.employee_id
+WHERE e.reports_to = 2
+;
+
+SELECT e.employee_id,
+       e.first_name,
+       e.last_name,
+       e.title AS employee_title,
+       m.employee_id,
+       m.title AS manager_title
+FROM employees e
+         LEFT JOIN employees m
+                   ON e.reports_to = m.employee_id
+WHERE e.reports_to = 5
+;
+
+
+SELECT city
+FROM customers
+UNION
+SELECT city
+FROM suppliers
+;
+SELECT DISTINCT city
+FROM customers
+ORDER BY city --DESC
+;
+
+
+SELECT city
+FROM suppliers
+;
+
+SELECT city
+FROM customers
+UNION ALL
+SELECT city
+FROM suppliers
+;
+
+(SELECT city,
+        'customer' AS origin
+ FROM customers)
+UNION ALL
+(SELECT city,
+        'supplier' AS origin
+ FROM suppliers)
+;
+
+SELECT city,
+       'customer' AS origin
+FROM customers
+UNION ALL
+SELECT city,
+       'supplier' AS origin
+FROM suppliers
+;
+
+
+SELECT *
+FROM (SELECT city,
+             'customer' AS origin
+      FROM customers
+      UNION ALL
+      SELECT city,
+             'supplier' AS origin
+      FROM suppliers) t1
+;
+
+SELECT city, origin, COUNT(1)
+FROM (SELECT city,
+             'customer' AS origin
+      FROM customers
+      UNION ALL
+      SELECT city,
+             'supplier' AS origin
+      FROM suppliers) t1
+GROUP BY city, origin
+--GROUP BY 1, 2
+--ORDER BY city, origin
+ORDER BY COUNT(1) DESC
+;
+
+
+SELECT city
+FROM customers
+EXCEPT
+SELECT city
+FROM suppliers
+ORDER BY city
+;
+
+SELECT DISTINCT city
+FROM suppliers
+ORDER BY city
+;
+
+SELECT city
+FROM customers
+INTERSECT
+SELECT city
+FROM suppliers
+;
+
+/*
+
+Домашнє завдання: SQL-практика. JOINs
+
+https://hannapylieva.notion.site/SQL-JOINs-1d594835849480e19eaac37639cc4c9b
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
