@@ -5,6 +5,10 @@ SQL: Window Functions
 
 https://hannapylieva.notion.site/SQL-Window-Functions-16194835849480929a7ee2528eb47f4e
 
+
+Learn SQL - Online SQL Terminal - Practice SQL Queries
+https://www.sql-practice.com/
+
 */
 
 SELECT AVG(weight) AS avg_weight
@@ -84,4 +88,19 @@ SELECT patient_id,
 FROM patients
 ORDER BY province_id, weight_dense_rank
 ;
+
+
+WITH ranked_customers AS (SELECT customer_id,
+                                 order_month,
+                                 total_purchase,
+                                 RANK() OVER (
+                                     PARTITION BY order_month
+                                     ORDER BY total_purchase DESC
+                                     ) AS purchase_rank
+                          FROM orders)
+SELECT customer_id, order_month, total_purchase
+FROM ranked_customers
+WHERE purchase_rank = 1
+;
+
 
