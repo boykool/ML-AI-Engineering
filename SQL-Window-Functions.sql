@@ -89,3 +89,16 @@ FROM patients
 ORDER BY province_id, weight_dense_rank
 ;
 
+WITH admissions_with_lag AS (SELECT patient_id,
+                                    admission_date,
+                                    LAG(admission_date)
+                                        OVER (
+                                            PARTITION BY patient_id -- Group by patient
+                                            ORDER BY admission_date -- Sort by admission date
+                                            ) AS previous_admission_date
+                             FROM admissions)
+SELECT patient_id,
+       admission_date,
+       previous_admission_date,
+       JULIANDAY(admission_date) - JULIANDAY(previous_admission_date) AS days_since
+FROM admissions_with_lag;
