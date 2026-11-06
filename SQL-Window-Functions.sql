@@ -101,4 +101,7 @@ SELECT patient_id,
        admission_date,
        previous_admission_date,
        JULIANDAY(admission_date) - JULIANDAY(previous_admission_date) AS days_since
-FROM admissions_with_lag;
+FROM admissions_with_lag
+;
+
+-- https://hannapylieva.notion.site/SQL-Window-Functions-1749483584948008b4e2e18fd054c1f7
