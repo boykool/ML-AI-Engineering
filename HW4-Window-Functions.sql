@@ -159,6 +159,7 @@ FROM ranked_products
 WHERE product_rank <= 3
 ORDER BY category_id
        , product_rank
+       , product_id
 ;
 
 /* Результат:
