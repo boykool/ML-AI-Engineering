@@ -154,7 +154,12 @@ WITH ranked_products AS (SELECT c.category_id
                          FROM products AS p
                          JOIN categories AS c
                            ON p.category_id = c.category_id)
-SELECT *
+SELECT category_id
+     , category_name
+     , product_id
+     , product_name
+     , unit_price
+     , product_rank
 FROM ranked_products
 WHERE product_rank <= 3
 ORDER BY category_id
@@ -452,7 +457,11 @@ WITH employee_orders AS (SELECT e.employee_id
                          GROUP BY e.employee_id
                                 , e.first_name
                                 , e.last_name)
-SELECT *
+SELECT employee_id
+     , first_name
+     , last_name
+     , order_count
+     , employee_rank
 FROM employee_orders
 WHERE employee_rank <= 3
 ORDER BY employee_rank
@@ -516,7 +525,12 @@ WITH region_employee_orders AS (SELECT c.region
                                        , e.employee_id
                                        , e.first_name
                                        , e.last_name)
-SELECT *
+SELECT region
+     , employee_id
+     , first_name
+     , last_name
+     , order_count
+     , employee_rank
 FROM region_employee_orders
 WHERE employee_rank <= 3
 ORDER BY region
