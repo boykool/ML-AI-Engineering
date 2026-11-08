@@ -385,13 +385,16 @@ ORDER BY avg_diff_days
 --      - last_name
 --      - order_count   - кількість оброблених замовлень
 --      - employee_rank - місце співробітника в рейтингу (1-3)
+--
+--    ROW_NUMBER (а не RANK) - щоб завжди отримати рівно трьох співробітників;
+--    при рівній кількості замовлень вище стоїть менший employee_id.
 -- ---------------------------------------------------------------------
 
 WITH employee_orders AS (SELECT e.employee_id
                               , e.first_name
                               , e.last_name
                               , COUNT(o.order_id) AS order_count
-                              , RANK() OVER (ORDER BY COUNT(o.order_id) DESC) AS employee_rank
+                              , ROW_NUMBER() OVER (ORDER BY COUNT(o.order_id) DESC, e.employee_id) AS employee_rank
                          FROM employees AS e
                          JOIN orders AS o
                            ON e.employee_id = o.employee_id
@@ -432,8 +435,10 @@ ORDER BY employee_rank
 --    у employees.region лише 'North America' та 'British Isles' (там, де працюють
 --    самі співробітники), тому рейтинг "у кожному регіоні" має сенс саме за регіоном
 --    клієнтів, чиї замовлення обробив співробітник.
---    RANK при однаковій кількості замовлень дає однакове місце, тому в регіоні
---    може бути більше трьох рядків.
+--    Умова вимагає рівно трьох співробітників, тому використано ROW_NUMBER, а не RANK:
+--    RANK дає однакове місце при однаковій кількості замовлень (напр. Eastern Europe:
+--    2, 2, 1, 1, 1 -> ранги 1, 1, 3, 3, 3), і фільтр employee_rank <= 3 повернув би
+--    п'ятьох. При рівній кількості замовлень вище стоїть менший employee_id.
 -- ---------------------------------------------------------------------
 
 WITH region_employee_orders AS (SELECT c.region
@@ -441,7 +446,7 @@ WITH region_employee_orders AS (SELECT c.region
                                      , e.first_name
                                      , e.last_name
                                      , COUNT(o.order_id) AS order_count
-                                     , RANK() OVER (PARTITION BY c.region ORDER BY COUNT(o.order_id) DESC) AS employee_rank
+                                     , ROW_NUMBER() OVER (PARTITION BY c.region ORDER BY COUNT(o.order_id) DESC, e.employee_id) AS employee_rank
                                 FROM orders AS o
                                 JOIN customers AS c
                                   ON o.customer_id = c.customer_id
@@ -464,25 +469,23 @@ ORDER BY region
       region     | employee_id | first_name | last_name | order_count | employee_rank
 -----------------+-------------+------------+-----------+-------------+---------------
  British Isles   |           3 | Janet      | Leverling |          13 |             1
- British Isles   |           4 | Margaret   | Peacock   |          13 |             1
+ British Isles   |           4 | Margaret   | Peacock   |          13 |             2
  British Isles   |           1 | Nancy      | Davolio   |          10 |             3
  Central America |           1 | Nancy      | Davolio   |           6 |             1
- Central America |           3 | Janet      | Leverling |           6 |             1
+ Central America |           3 | Janet      | Leverling |           6 |             2
  Central America |           7 | Robert     | King      |           5 |             3
  Eastern Europe  |           1 | Nancy      | Davolio   |           2 |             1
- Eastern Europe  |           4 | Margaret   | Peacock   |           2 |             1
+ Eastern Europe  |           4 | Margaret   | Peacock   |           2 |             2
  Eastern Europe  |           5 | Steven     | Buchanan  |           1 |             3
- Eastern Europe  |           6 | Michael    | Suyama    |           1 |             3
- Eastern Europe  |           8 | Laura      | Callahan  |           1 |             3
  North America   |           3 | Janet      | Leverling |          30 |             1
  North America   |           1 | Nancy      | Davolio   |          26 |             2
  North America   |           4 | Margaret   | Peacock   |          25 |             3
  Northern Europe |           8 | Laura      | Callahan  |          10 |             1
  Northern Europe |           1 | Nancy      | Davolio   |           9 |             2
- Northern Europe |           3 | Janet      | Leverling |           9 |             2
+ Northern Europe |           3 | Janet      | Leverling |           9 |             3
  Scandinavia     |           2 | Andrew     | Fuller    |           7 |             1
  Scandinavia     |           1 | Nancy      | Davolio   |           4 |             2
- Scandinavia     |           8 | Laura      | Callahan  |           4 |             2
+ Scandinavia     |           8 | Laura      | Callahan  |           4 |             3
  South America   |           4 | Margaret   | Peacock   |          32 |             1
  South America   |           8 | Laura      | Callahan  |          21 |             2
  South America   |           1 | Nancy      | Davolio   |          20 |             3
@@ -492,6 +495,6 @@ ORDER BY region
  Western Europe  |           4 | Margaret   | Peacock   |          55 |             1
  Western Europe  |           3 | Janet      | Leverling |          41 |             2
  Western Europe  |           1 | Nancy      | Davolio   |          36 |             3
-(29 rows)
+(27 rows)
 
 */
