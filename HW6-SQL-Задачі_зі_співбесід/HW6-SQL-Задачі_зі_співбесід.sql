@@ -214,19 +214,27 @@ ORDER BY customer_id
    --------------------------------------------------------------------- */
 
 /*
-   Self-join по даті; умова t1.customer_id < t2.customer_id прибирає пари
-   клієнта із самим собою та дзеркальні дублікати (A, B) / (B, A).
+   CTE customer_days спершу згортає транзакції до унікальних пар
+   (клієнт, день), щоб self-join не розмножував рядки, коли клієнт має
+   багато транзакцій за один день.
    DATE() — на випадок, якщо transaction_date зберігається як DATETIME.
-   DISTINCT — якщо пара збігалась у кілька днів або мала кілька транзакцій
-   за день, вона виводиться один раз.
+   Умова d1.customer_id < d2.customer_id прибирає пари клієнта із самим
+   собою та дзеркальні дублікати (A, B) / (B, A).
+   DISTINCT у фінальному SELECT — якщо пара збігалась у кілька різних днів,
+   вона виводиться один раз.
  */
 
-SELECT DISTINCT t1.customer_id AS customer_id_1
-              , t2.customer_id AS customer_id_2
-FROM transactions AS t1
-JOIN transactions AS t2
-  ON DATE(t1.transaction_date) = DATE(t2.transaction_date)
- AND t1.customer_id < t2.customer_id
+WITH customer_days AS (
+    SELECT DISTINCT customer_id
+                  , DATE(transaction_date) AS transaction_day
+    FROM transactions
+)
+SELECT DISTINCT d1.customer_id AS customer_id_1
+              , d2.customer_id AS customer_id_2
+FROM customer_days AS d1
+JOIN customer_days AS d2
+  ON d1.transaction_day = d2.transaction_day
+ AND d1.customer_id < d2.customer_id
 ORDER BY customer_id_1
        , customer_id_2
 ;
