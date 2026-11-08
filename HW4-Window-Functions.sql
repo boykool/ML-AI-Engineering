@@ -350,13 +350,65 @@ ORDER BY avg_diff_days
 
 */
 
+-- Додатково: альтернативний спосіб усереднення - спочатку середній інтервал
+-- кожного клієнта, потім середнє цих значень по регіону. Так кожен клієнт має
+-- однакову вагу, незалежно від кількості його замовлень (у запитах вище клієнти
+-- з великою кількістю замовлень "важать" більше).
+
+WITH order_diffs AS (SELECT o.customer_id
+                          , c.region
+                          , JULIANDAY(o.order_date)
+                            - JULIANDAY(LAG(o.order_date) OVER (PARTITION BY o.customer_id ORDER BY o.order_date, o.order_id)) AS diff_days
+                     FROM orders AS o
+                     JOIN customers AS c
+                       ON o.customer_id = c.customer_id)
+   , customer_avg AS (SELECT region
+                           , customer_id
+                           , AVG(diff_days) AS customer_avg_diff_days
+                      FROM order_diffs
+                      GROUP BY region
+                             , customer_id)
+SELECT region
+     , COUNT(customer_avg_diff_days) AS customers_cnt
+     , ROUND(AVG(customer_avg_diff_days), 2) AS avg_diff_days
+FROM customer_avg
+GROUP BY region
+ORDER BY avg_diff_days
+;
+
+/* Результат:
+
+      region     | customers_cnt | avg_diff_days
+-----------------+---------------+---------------
+ Northern Europe |             4 |         52.62
+ Scandinavia     |             3 |         60.76
+ Western Europe  |            27 |          69.6
+ North America   |            16 |         74.18
+ Eastern Europe  |             1 |          84.0
+ British Isles   |             8 |          86.4
+ South America   |            16 |         100.1
+ Central America |             4 |        108.64
+ Southern Europe |             9 |        113.06
+(9 rows)
+
+*/
+
+-- customers_cnt тут - клієнти, що мають хоча б один інтервал (2+ замовлення):
+-- у Central America 5 клієнтів, але один із них зробив лише одне замовлення.
+
 /* Відповіді на питання:
 
 1) Найчастіше повторні замовлення роблять клієнти з регіону Northern Europe
    (в середньому кожні ~44.22 дні), далі North America (~49.21).
    Найрідше - клієнти з Central America (~94.39 дні), трохи частіше Southern Europe (~89.07).
+   Якщо ж усереднювати спочатку по клієнту, а потім по регіону (альтернативний запит вище),
+   лідер той самий - Northern Europe (~52.62), але найрідше замовляють уже в Southern Europe
+   (~113.06), а Central America - друга з кінця (~108.64).
 
 2) Чи можна робити коректні висновки? Лише з обережністю:
+   - Результат залежить від способу усереднення: загальне середнє по всіх інтервалах
+     регіону vs середнє середніх по клієнтах дають різних "аутсайдерів"
+     (Central America vs Southern Europe).
    - Мала вибірка в частині регіонів: Eastern Europe - 1 клієнт / 6 інтервалів,
      Scandinavia - 3 клієнти, Northern Europe - 4 клієнти. Середнє по 1-4 клієнтах
      відображає поведінку окремих компаній, а не регіону.
