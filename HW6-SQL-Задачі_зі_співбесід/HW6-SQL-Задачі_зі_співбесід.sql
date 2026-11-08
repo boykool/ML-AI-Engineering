@@ -152,6 +152,7 @@ WHERE status = 'completed'
   AND transaction_date <  DATE_FORMAT(CURDATE(), '%Y-%m-01') + INTERVAL 1 MONTH
 GROUP BY customer_id
 HAVING SUM(amount) > 1000
+-- HAVING MAX(amount) > 1000
 ORDER BY customer_id
 ;
 
