@@ -2,6 +2,17 @@
 
 /*
 
+оригнальні завдання взято з Google Docs:
+https://docs.google.com/document/d/1ZVoIFUy3rBD92epNdOecpBqe2UKQM2zcVtlJSpFiXWU
+
+моє рішення завдань з поясненнями та коментарями зберігаю тут:
+https://docs.google.com/document/d/1cPcuar61yJI-ygE-xkbqnhioLxmgfJbH
+
+ */
+
+
+/*
+
 В цьому ДЗ ми імітуємо ситуації на співбесіді, де ви пишете SQL запит без доступу
 до бази і зручного редактора просто в Google Docs.
 
