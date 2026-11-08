@@ -49,6 +49,7 @@ SELECT customer_id
 FROM orders
 GROUP BY customer_id
 HAVING SUM(amount) > 1000
+-- HAVING MAX(amount) > 1000
 ORDER BY customer_id
 ;
 
