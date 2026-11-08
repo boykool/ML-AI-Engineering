@@ -456,6 +456,7 @@ SELECT *
 FROM employee_orders
 WHERE employee_rank <= 3
 ORDER BY employee_rank
+       , employee_id
 ;
 
 /* Результат:
