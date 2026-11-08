@@ -68,6 +68,7 @@ ORDER BY customer_id
 
 SELECT customer_id
      , SUM(amount) AS total_completed_amount
+--   , SUM(CASE WHEN status = 'completed' THEN amount ELSE 0 END) AS total_completed_amount
 FROM transactions
 WHERE status = 'completed'
 GROUP BY customer_id
